@@ -1,0 +1,7 @@
+substitutions:
+  devicename: sonoff-s20-01
+  fancyname: Sonoff S20
+
+<<: !include common/botnet.yaml
+
+<<: !include common/sonoff_s20.yaml

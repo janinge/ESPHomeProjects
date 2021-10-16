@@ -1,0 +1,68 @@
+esphome:
+  name: garage
+  platform: ESP8266
+  board: esp07
+
+wifi:
+  ssid: "Botnet"
+  password: !secret botnet_password
+
+switch:
+  - platform: gpio
+    pin: GPIO12
+    name: "Door lock"
+    restore_mode: RESTORE_DEFAULT_ON
+    icon: "mdi:lock"
+    id: "garage_door_lock"
+    inverted: True
+  - platform: gpio
+    pin: GPIO14
+    name: "Relay 1"
+    id: "garage_relay1"
+  - platform: gpio
+    pin: GPIO13
+    name: "Relay 2"
+    id: "garage_relay2"
+  - platform: gpio
+    pin: GPIO16
+    name: "White LED"
+    restore_mode: ALWAYS_OFF
+    id: "garage_status_light"
+
+binary_sensor:
+  - platform: gpio
+    pin:
+      number: GPIO4
+      inverted: True
+    name: "Door open"
+    device_class: garage_door
+    id: "garage_door_opened"
+  - platform: gpio
+    pin: GPIO5
+    name: "PIR sensor"
+    device_class: motion
+    id: "garage_motion"
+
+dallas:
+  - pin: GPIO2
+    update_interval: 10s
+
+sensor:
+  - platform: dallas
+    id: "garage_temperature"
+    name: "Garage temperature"
+    icon: "mdi:temperature-celsius"
+    index: 0
+    unit_of_measurement: "°C"
+    accuracy_decimals: 2
+
+# Enable logging
+logger:
+
+# Enable Home Assistant API
+api:
+  password: !secret outdoors_password
+
+ota:
+  password: !secret outdoors_password
+

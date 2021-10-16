@@ -1,0 +1,7 @@
+substitutions:
+  devicename: sonoff-th16-01
+  fancyname: Sonoff TH16
+
+<<: !include common/botnet.yaml
+
+<<: !include common/sonoff_th16.yaml

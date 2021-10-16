@@ -1,0 +1,110 @@
+esphome:
+  name: panasonic-tv
+  platform: ESP8266
+  board: esp07
+  on_boot:
+    priority: -40
+    then:
+    - delay: 8000ms
+    - switch.turn_on: av
+    - delay: 500ms
+    - switch.turn_off: av
+
+wifi:
+  ssid: "Botnet"
+  password: !secret botnet_password
+
+  ap:
+    ssid: "Panasonic TV"
+    password: !secret ap_password
+
+captive_portal:
+
+# Disable logging
+logger:
+  baud_rate: 0
+
+# Enable Home Assistant API
+api:
+  password: !secret ha_password
+
+ota:
+  password: !secret ota_password
+
+switch:
+  - platform: gpio
+    pin:
+      number: GPIO4
+      inverted: True
+      mode: OUTPUT_OPEN_DRAIN
+    id: func
+    restore_mode: ALWAYS_OFF
+  - platform: gpio
+    pin:
+      number: GPIO5
+      inverted: True
+      mode: OUTPUT_OPEN_DRAIN
+    id: up
+    restore_mode: ALWAYS_OFF
+  - platform: gpio
+    pin:
+      number: GPIO12
+      inverted: True
+      mode: OUTPUT_OPEN_DRAIN
+    id: down
+    restore_mode: ALWAYS_OFF
+  - platform: gpio
+    pin:
+      number: GPIO14
+      inverted: True
+      mode: OUTPUT_OPEN_DRAIN
+    id: tv
+    restore_mode: ALWAYS_OFF
+  - platform: gpio
+    pin:
+      number: GPIO13
+      inverted: True
+      mode: OUTPUT_OPEN_DRAIN
+    id: av
+    restore_mode: ALWAYS_OFF
+  - platform: template
+    name: "F"
+    icon: "mdi:adjust"
+    turn_on_action:
+    - switch.turn_on: func
+    - delay: 500ms
+    - switch.turn_off: func
+    - delay: 100ms
+  - platform: template
+    name: "Up"
+    icon: "mdi:chevron-up-circle"
+    turn_on_action:
+    - switch.turn_on: up
+    - delay: 500ms
+    - switch.turn_off: up
+    - delay: 100ms
+  - platform: template
+    name: "Down"
+    icon: "mdi:chevron-down-circle"
+    turn_on_action:
+    - switch.turn_on: down
+    - delay: 500ms
+    - switch.turn_off: down
+    - delay: 100ms
+  - platform: template
+    name: "TV"
+    icon: "mdi:video-input-antenna"
+    turn_on_action:
+    - switch.turn_on: tv
+    - delay: 500ms
+    - switch.turn_off: tv
+    - delay: 100ms
+  - platform: template
+    name: "AV"
+    icon: "mdi:video-input-hdmi"
+    turn_on_action:
+    - switch.turn_on: av
+    - delay: 500ms
+    - switch.turn_off: av
+    - delay: 100ms
+

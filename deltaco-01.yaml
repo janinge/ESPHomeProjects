@@ -1,0 +1,8 @@
+substitutions:
+  devicename: deltaco-01
+  fancyname: Deltaco SH-LE27RGB
+
+<<: !include common/botnet.yaml
+
+<<: !include common/deltaco_bulb.yaml
+
