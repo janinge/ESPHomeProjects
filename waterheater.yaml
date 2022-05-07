@@ -1,0 +1,10 @@
+substitutions:
+  devicename: waterheater
+  fancyname: Waterheater
+  current_res: "0.00221"
+  voltage_div: "955"
+
+<<: !include common/botnet.yaml
+
+<<: !include common/blitzwolf_shp2.yaml
+

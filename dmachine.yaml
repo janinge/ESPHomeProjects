@@ -1,0 +1,11 @@
+substitutions:
+  devicename: dmachine
+  fancyname: D. Machine
+  current_res: "0.00221"
+  voltage_div: "955"
+
+<<: !include common/fourseasons.yaml
+
+<<: !include common/blitzwolf_shp2.yaml
+
+

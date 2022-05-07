@@ -1,0 +1,10 @@
+substitutions:
+  devicename: charger
+  fancyname: Charger
+  current_res: "0.00221"
+  voltage_div: "955"
+
+<<: !include common/botnet.yaml
+
+<<: !include common/blitzwolf_shp2.yaml
+

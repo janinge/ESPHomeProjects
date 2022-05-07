@@ -1,22 +1,14 @@
-substitutions:
-  devicename: blitzwolf-shp2
-  fancyname: Blitzwolf BW-SHP2
-  current_res: "0.00221"
-  voltage_div: "955"
-
 esphome:
   name: $devicename
   platform: ESP8266
   board: esp01_1m
   esp8266_restore_from_flash: true
 
-<<: !include common/fourseasons.yaml
-
 time:
   - platform: homeassistant
     id: homeassistant_time
 
-# Enable logging
+# Disable logging
 logger:
   baud_rate: 0
 
@@ -39,18 +31,18 @@ sensor:
     cf_pin: GPIO04
     cf1_pin: GPIO05
     current:
-      name: "HLW8012 Current"
+      name: ${fancyname} Current
       accuracy_decimals: 3
       icon: mdi:mdi-flash-auto
       unit_of_measurement: A
     voltage:
-      name: "HLW8012 Voltage"
+      name: ${fancyname} Voltage
       accuracy_decimals: 1
       unit_of_measurement: V
       icon: mdi:current-ac
     power:
       id: wattage
-      name: "HLW8012 Power"
+      name: ${fancyname} Power
       accuracy_decimals: 0
       unit_of_measurement: W
       icon: mdi:hydro-power
@@ -63,6 +55,7 @@ sensor:
     name: ${fancyname} Total Daily Energy
     icon: mdi:circle-slice-3
     power_id: wattage
+    min_save_interval: 6h
     filters:
       - multiply: 0.001
     unit_of_measurement: kWh
@@ -124,13 +117,12 @@ interval:
                 brightness: 100%
 
 script:
-  - id: led_relay_off # Normal operation when relay is off
+  - id: led_relay_off
     then:
       - light.turn_off:
           id: ${devicename}_red_led
-  - id: led_power_on # Normal operation when relay is on
+  - id: led_power_on
     then:
       - light.turn_on:
           id: ${devicename}_red_led
-          brightness: 50%
 
